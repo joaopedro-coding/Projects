@@ -20,12 +20,14 @@ class MainWindow(QMainWindow):
         self.main_layout = QVBoxLayout()
 
         header = self.create_header()
-        morse_input = self.create_input()
+        morse_input = self.create_input_box()
+        morse_result = self.create_result_box()
         mode_selector = self.create_mode_selector()
 
         self.main_layout.addLayout(header)
         self.main_layout.addLayout(morse_input)
         self.main_layout.addLayout(mode_selector)
+        self.main_layout.addLayout(morse_result)
         self.main_layout.addStretch()
         self.central_widget.setLayout(self.main_layout)
 
@@ -72,27 +74,33 @@ class MainWindow(QMainWindow):
 
         return mode_layout        
 
-    def create_input(self):
+    def create_input_box(self):
         input_layout = QVBoxLayout()
 
         self.input_label = QLabel("INPUT TEXT")
         self.input_box = QTextEdit(placeholderText="Type your message here...")
+        self.input_box.setReadOnly(False)
         self.input_box.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.input_box.setMaximumHeight(80)
+        self.input_box.setFixedHeight(80)
+
+        input_layout.addWidget(self.input_label)
+        input_layout.addWidget(self.input_box)
+
+        return input_layout
+    
+    def create_result_box(self):
+        result_layout = QVBoxLayout()
 
         self.result_label = QLabel("MORSE CODE RESULT")
         self.result_box = QTextEdit(placeholderText="Here are your results...")
         self.result_box.setReadOnly(True)
         self.result_box.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.result_box.setMaximumHeight(80)
+        self.result_box.setFixedHeight(80)
 
-        input_layout.addWidget(self.input_label)
-        input_layout.addWidget(self.input_box)
-        input_layout.addWidget(self.result_label)
-        input_layout.addWidget(self.result_box)
+        result_layout.addWidget(self.result_label)
+        result_layout.addWidget(self.result_box)
 
-        return input_layout
-
+        return result_layout
 
 def main():
     app = QApplication(sys.argv)
