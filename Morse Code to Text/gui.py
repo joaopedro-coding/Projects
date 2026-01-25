@@ -1,6 +1,6 @@
 import sys
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QTextEdit, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QTextEdit, QVBoxLayout, QHBoxLayout, QSizePolicy, QPushButton
 from PySide6.QtGui import QIcon, QFont, QPixmap
 from PySide6.QtCore import Qt
 
@@ -21,9 +21,11 @@ class MainWindow(QMainWindow):
 
         header = self.create_header()
         morse_input = self.create_input()
+        mode_selector = self.create_mode_selector()
 
         self.main_layout.addLayout(header)
         self.main_layout.addLayout(morse_input)
+        self.main_layout.addLayout(mode_selector)
         self.main_layout.addStretch()
         self.central_widget.setLayout(self.main_layout)
 
@@ -42,6 +44,33 @@ class MainWindow(QMainWindow):
         header_layout.addStretch()
 
         return header_layout
+
+    def create_mode_selector(self):
+        mode_layout = QHBoxLayout()
+
+        text_to_morse_layout = QHBoxLayout()
+        self.text_to_morse = QPushButton("TEXT - MORSE")
+        self.arrow_down = QLabel()
+        arrow_down_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/arrow-white.svg"))
+        self.arrow_down.setPixmap(arrow_down_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        text_to_morse_layout.addWidget(self.text_to_morse)
+        text_to_morse_layout.addWidget(self.arrow_down)
+
+        morse_to_text_layout = QHBoxLayout()
+        self.morse_to_text = QPushButton("MORSE - TEXT")
+        self.arrow_up = QLabel()
+        arrow_up_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/arrow-up-white.svg"))
+        self.arrow_up.setPixmap(arrow_up_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        morse_to_text_layout.addWidget(self.morse_to_text)
+        morse_to_text_layout.addWidget(self.arrow_up)
+
+        mode_layout.addStretch()
+        mode_layout.addLayout(text_to_morse_layout)
+        mode_layout.addSpacing(20)
+        mode_layout.addLayout(morse_to_text_layout)
+        mode_layout.addStretch()
+
+        return mode_layout        
 
     def create_input(self):
         input_layout = QVBoxLayout()
