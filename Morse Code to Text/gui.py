@@ -52,26 +52,19 @@ class MainWindow(QMainWindow):
     def create_mode_selector(self):
         mode_layout = QHBoxLayout()
 
-        text_to_morse_layout = QHBoxLayout()
-        self.text_to_morse = QPushButton("TEXT - MORSE")
-        self.arrow_down = QLabel()
-        arrow_down_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/arrow-white.svg"))
-        self.arrow_down.setPixmap(arrow_down_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        text_to_morse_layout.addWidget(self.text_to_morse)
-        text_to_morse_layout.addWidget(self.arrow_down)
+        self.text_to_morse_button = QPushButton("TEXT - MORSE")
+        self.text_to_morse_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/arrow-white.svg")))
+        self.text_to_morse_button.setLayoutDirection(Qt.RightToLeft)
 
-        morse_to_text_layout = QHBoxLayout()
-        self.morse_to_text = QPushButton("MORSE - TEXT")
-        self.arrow_up = QLabel()
-        arrow_up_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/arrow-up-white.svg"))
-        self.arrow_up.setPixmap(arrow_up_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        morse_to_text_layout.addWidget(self.morse_to_text)
-        morse_to_text_layout.addWidget(self.arrow_up)
+        self.morse_to_text_button = QPushButton("MORSE - TEXT")
+        self.morse_to_text_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/arrow-up-white.svg")))
+        self.morse_to_text_button.setLayoutDirection(Qt.RightToLeft)
+
 
         mode_layout.addStretch()
-        mode_layout.addLayout(text_to_morse_layout)
+        mode_layout.addWidget(self.text_to_morse_button)
         mode_layout.addSpacing(20)
-        mode_layout.addLayout(morse_to_text_layout)
+        mode_layout.addWidget(self.morse_to_text_button)
         mode_layout.addStretch()
 
         return mode_layout        
@@ -107,36 +100,21 @@ class MainWindow(QMainWindow):
     def create_footer(self):
         footer_layout = QHBoxLayout()
 
-        play_layout = QHBoxLayout()
         self.play_button = QPushButton("Play")
-        self.play = QLabel()
-        play_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/play-white.svg"))
-        self.play.setPixmap(play_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        play_layout.addWidget(self.play)
-        play_layout.addWidget(self.play_button)
+        self.play_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/play-white.svg")))
 
-        copy_layout = QHBoxLayout()
         self.copy_button = QPushButton("Copy")
-        self.copy = QLabel()
-        copy_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/copy-white.svg"))
-        self.copy.setPixmap(copy_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        copy_layout.addWidget(self.copy)
-        copy_layout.addWidget(self.copy_button)
+        self.copy_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/copy-white.svg")))
 
-        clear_layout = QHBoxLayout()
         self.clear_button = QPushButton("Clear")
-        self.clear = QLabel()
-        clear_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/clear.svg"))
-        self.clear.setPixmap(clear_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        clear_layout.addWidget(self.clear)
-        clear_layout.addWidget(self.clear_button)
+        self.clear_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/clear.svg")))
 
         footer_layout.addStretch()
-        footer_layout.addLayout(play_layout)
+        footer_layout.addWidget(self.play_button)
         footer_layout.addSpacing(20)
-        footer_layout.addLayout(copy_layout)
+        footer_layout.addWidget(self.copy_button)
         footer_layout.addSpacing(20)
-        footer_layout.addLayout(clear_layout)
+        footer_layout.addWidget(self.clear_button)
         footer_layout.addStretch()
         
         return footer_layout
