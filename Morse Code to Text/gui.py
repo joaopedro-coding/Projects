@@ -23,12 +23,14 @@ class MainWindow(QMainWindow):
         morse_input = self.create_input_box()
         morse_result = self.create_result_box()
         mode_selector = self.create_mode_selector()
+        footer = self.create_footer()
 
         self.main_layout.addLayout(header)
         self.main_layout.addLayout(morse_input)
         self.main_layout.addLayout(mode_selector)
         self.main_layout.addLayout(morse_result)
-        self.main_layout.addStretch()
+        self.main_layout.addLayout(footer)
+        self.adjustSize()
         self.central_widget.setLayout(self.main_layout)
 
     
@@ -101,6 +103,43 @@ class MainWindow(QMainWindow):
         result_layout.addWidget(self.result_box)
 
         return result_layout
+
+    def create_footer(self):
+        footer_layout = QHBoxLayout()
+
+        play_layout = QHBoxLayout()
+        self.play_button = QPushButton("Play")
+        self.play = QLabel()
+        play_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/play-white.svg"))
+        self.play.setPixmap(play_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        play_layout.addWidget(self.play)
+        play_layout.addWidget(self.play_button)
+
+        copy_layout = QHBoxLayout()
+        self.copy_button = QPushButton("Copy")
+        self.copy = QLabel()
+        copy_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/copy-white.svg"))
+        self.copy.setPixmap(copy_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        copy_layout.addWidget(self.copy)
+        copy_layout.addWidget(self.copy_button)
+
+        clear_layout = QHBoxLayout()
+        self.clear_button = QPushButton("Clear")
+        self.clear = QLabel()
+        clear_image = QPixmap(os.path.join(SCRIPT_DIR, "Resources/clear.svg"))
+        self.clear.setPixmap(clear_image.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        clear_layout.addWidget(self.clear)
+        clear_layout.addWidget(self.clear_button)
+
+        footer_layout.addStretch()
+        footer_layout.addLayout(play_layout)
+        footer_layout.addSpacing(20)
+        footer_layout.addLayout(copy_layout)
+        footer_layout.addSpacing(20)
+        footer_layout.addLayout(clear_layout)
+        footer_layout.addStretch()
+        
+        return footer_layout
 
 def main():
     app = QApplication(sys.argv)
