@@ -3,6 +3,7 @@ import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QTextEdit, QVBoxLayout, QHBoxLayout, QSizePolicy, QPushButton, QButtonGroup
 from PySide6.QtGui import QIcon, QFont, QPixmap
 from PySide6.QtCore import Qt
+from converter import Converter
 
 # Get the directory where this script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -13,6 +14,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(700, 300, 500, 500)
         self.setWindowTitle("Morse Code Translator")
         self.setWindowIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/morse-icon.png")))
+        self.converter = Converter()
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -58,6 +60,8 @@ class MainWindow(QMainWindow):
         self.text_to_morse_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/arrow-white.svg")))
         self.text_to_morse_button.setLayoutDirection(Qt.RightToLeft)
         self.text_to_morse_button.setCheckable(True)
+        self.text_to_morse_button.toggled.connect(self.check_button)
+        self.text_to_morse_button.toggle()
 
         self.morse_to_text_button = QPushButton("MORSE - TEXT")
         self.morse_to_text_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/arrow-up-white.svg")))
@@ -85,6 +89,7 @@ class MainWindow(QMainWindow):
         self.input_box.setReadOnly(False)
         self.input_box.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.input_box.setFixedHeight(80)
+        self.input_box.textChanged.connect(self.translate_morse) # Change this to know if decrypt or encrypt
 
         input_layout.addWidget(self.input_label)
         input_layout.addWidget(self.input_box)
@@ -174,6 +179,22 @@ class MainWindow(QMainWindow):
         padding-right: 15px;
                            }
 """)
+    
+    def translate_morse(self):
+        msg = self.input_box.toPlainText().upper()
+        if self.text_to_morse_button.isChecked():
+            translation = self.converter.encrypt(msg)
+        else:
+            translation = self.converter.decrypt(msg)
+        self.result_box.setPlainText(translation)
+    
+    def check_button(self):
+        if self.text_to_morse_button.isChecked():
+            self.input_label.setText("INPUT TEXT")
+            self.result_label.setText("MORSE CODE ENCRYPTION")
+        elif self.morse_to_text_button.isChecked():
+            self.input_label.setText("MORSE TEXT")
+            self.result_label.setText("MORSE CODE DECRYPTION")
 
 def main():
     app = QApplication(sys.argv)
