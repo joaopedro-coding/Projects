@@ -36,6 +36,6 @@ class Converter:
 
         # Joins each letter returning a full word
         try:
-            return "".join(REVERSE_MORSE_DICT[char] for char in words)
+            return "".join(REVERSE_MORSE_DICT.get(char, "") for char in words)
         except KeyError as e:
             raise MorseTranslationError(f"Invalid keyword or invalid morsecode {e}")

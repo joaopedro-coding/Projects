@@ -120,10 +120,12 @@ class MainWindow(QMainWindow):
 
         self.copy_button = QPushButton("Copy")
         self.copy_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/copy-white.svg")))
+        self.copy_button.clicked.connect(self.copy)
         self.copy_button.setObjectName("custom-button")
 
         self.clear_button = QPushButton("Clear")
         self.clear_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/clear.svg")))
+        self.clear_button.clicked.connect(self.clear)
         self.clear_button.setObjectName("custom-button")
 
         footer_layout.addStretch()
@@ -189,12 +191,27 @@ class MainWindow(QMainWindow):
         self.result_box.setPlainText(translation)
     
     def check_button(self):
+        self.input_box.blockSignals(True)
+        current_result = self.result_box.toPlainText()
+
         if self.text_to_morse_button.isChecked():
             self.input_label.setText("INPUT TEXT")
             self.result_label.setText("MORSE CODE ENCRYPTION")
         elif self.morse_to_text_button.isChecked():
             self.input_label.setText("MORSE TEXT")
             self.result_label.setText("MORSE CODE DECRYPTION")
+        
+        self.input_box.setPlainText(current_result)
+        self.input_box.blockSignals(False)
+        self.translate_morse()
+
+    def clear(self):
+        self.input_box.clear()
+        self.result_box.clear()
+    
+    def copy(self):
+        clipboard = QApplication.clipboard()
+        clipboard.setText(self.result_box.toPlainText())
 
 def main():
     app = QApplication(sys.argv)
