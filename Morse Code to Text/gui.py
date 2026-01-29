@@ -1,8 +1,9 @@
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QTextEdit, QVBoxLayout, QHBoxLayout, QSizePolicy, QPushButton, QButtonGroup
-from PySide6.QtGui import QIcon, QFont, QPixmap
-from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtMultimedia import QSoundEffect
+from PySide6.QtCore import Qt, QUrl, QTimer
 from converter import Converter
 
 # Get the directory where this script is located
@@ -15,6 +16,15 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Morse Code Translator")
         self.setWindowIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/morse-icon.png")))
         self.converter = Converter()
+
+        # Import the dot and dash sounds
+        self.sound_dot = QSoundEffect()
+        self.sound_dot.setSource(QUrl.fromLocalFile(os.path.join(SCRIPT_DIR, "Resources/dot.wav")))
+        self.sound_dot.setVolume(0.5)
+
+        self.sound_dash = QSoundEffect()
+        self.sound_dash.setSource(QUrl.fromLocalFile(os.path.join(SCRIPT_DIR, "Resources/dash.wav")))
+        self.sound_dash.setVolume(0.5)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -116,6 +126,7 @@ class MainWindow(QMainWindow):
 
         self.play_button = QPushButton("Play")
         self.play_button.setIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/play-white.svg")))
+        self.play_button.clicked.connect(self.play_morse)
         self.play_button.setObjectName("custom-button")
 
         self.copy_button = QPushButton("Copy")
@@ -212,6 +223,39 @@ class MainWindow(QMainWindow):
     def copy(self):
         clipboard = QApplication.clipboard()
         clipboard.setText(self.result_box.toPlainText())
+    
+    def play_morse(self):
+        self.sound_queue = []
+        if self.text_to_morse_button.isChecked():
+            morse_code = self.result_box.toPlainText()
+        else:
+            morse_code = self.input_box.toPlainText()
+        if not morse_code:
+            return
+        self.sound_queue = list(morse_code)
+        self.play_next_bit()
+    
+    def play_next_bit(self):
+        if not self.sound_queue:
+            return
+        
+        char = self.sound_queue.pop(0)
+        delay = 200
+
+        if char == ".":
+            self.sound_dot.play()
+            delay = 250
+        elif char == "-":
+            self.sound_dash.play()
+            delay = 450
+        elif char == " ":
+            delay = 400
+        elif char == "/":
+            delay = 700
+        else:
+            delay = 50
+
+        QTimer.singleShot(delay, self.play_next_bit)
 
 def main():
     app = QApplication(sys.argv)
