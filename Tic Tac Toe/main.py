@@ -22,12 +22,44 @@ class TicTacToe:
             raise PlaceError("This place is already ocuppied")
         else:
             self.board[line][column] = self.player
+        self.display_board()
+        self.change_player()
     
+    def check_vitory(self):
+        for i in range(3):
+            # Checking horizontal and vertical lines
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] != " ":
+                return True
+            elif self.board[0][i] == self.board[1][i] == self.board[2][i] != " ":
+                return True
+ 
+        # Checking diagonals
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != " ":
+            return True
+        elif self.board[0][2] == self.board[1][1] == self.board[2][0] != " ":
+            return True
+        
+        return False
+    
+    def change_player(self):
+        self.player = "X" if self.player == "O" else "O"
+
+class PlayGame():
+    def __init__(self):
+        self.game = TicTacToe()
+    
+    def run_game(self):
+        winning_player = ""
+        while not self.game.check_vitory():
+            winning_player = self.game.check_vitory()
+            self.game.update_board()
+        print(f"Game over {winning_player} won.")
+
+
+
 def main():
-    game = TicTacToe()
-    game.update_board()
-    game.display_board()
-    game.update_board()
+    game = PlayGame()
+    game.run_game()
 
 if __name__ == "__main__":
     main()
