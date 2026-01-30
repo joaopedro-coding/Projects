@@ -1,0 +1,2 @@
+class PlaceError(Exception):
+    pass
