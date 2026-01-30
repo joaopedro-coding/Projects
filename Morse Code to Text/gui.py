@@ -217,6 +217,7 @@ class MainWindow(QMainWindow):
         self.translate_morse()
 
     def clear(self):
+        self.sound_queue = []
         self.input_box.clear()
         self.result_box.clear()
     
@@ -256,14 +257,3 @@ class MainWindow(QMainWindow):
             delay = 50
 
         QTimer.singleShot(delay, self.play_next_bit)
-
-def main():
-    app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(os.path.join(SCRIPT_DIR, "Resources/morse-icon.png")))
-    window = MainWindow()
-    window.show()
-
-    sys.exit(app.exec())
-
-if __name__ == "__main__":
-    main()
