@@ -66,33 +66,43 @@ class MainWindow(QMainWindow):
         return grid_layout  
     
     def create_footer(self):
-        footer_layout = QHBoxLayout()
+        footer_layout = QVBoxLayout()
+        button_layout = QHBoxLayout()
 
         self.reset_button = QPushButton("RESET")
         self.reset_button.setIcon(QIcon(os.path.join(DIR, "Resources/recycle.svg")))
         self.reset_button.setFixedSize(120, 30)
         self.reset_button.setIconSize(QSize(20, 20))
         self.reset_button.setStyleSheet("QPushButton {border: 1px solid grey; border-radius: 2px; font-family: Roboto, sans-serif; font-size: 12px; padding: 8px 12px 8px 12px; background-color: rgb(65, 65, 65)} QPushButton:hover {background-color: rgb(80, 80, 80)} QPushButton:pressed {background-color: rgb(85, 85, 85)}")
+        self.reset_button.clicked.connect(self.restart_game)
         self.new_game_button = QPushButton("NEW GAME")
         self.new_game_button.setFixedSize(120, 30)
         self.new_game_button.setIconSize(QSize(20, 20))
         self.new_game_button.setStyleSheet("QPushButton {border: 1px solid rgb(133, 232, 39); border-radius: 2px; font-family: Roboto, sans-serif; font-size: 12px; padding: 8px 12px 8px 12px; background-color: rgb(60, 77, 44); color: rgb(133, 232, 39)} QPushButton:hover {background-color: rgb(80, 100, 60)} QPushButton:pressed {background-color: rgb(85, 110, 65)}")
-        
+        self.new_game_button.clicked.connect(self.restart_game)
 
-        footer_layout.addStretch()
-        footer_layout.addWidget(self.reset_button)
-        footer_layout.addWidget(self.new_game_button)
-        footer_layout.addStretch()
+        # Creating the status label
+        self.status_label = QLabel("")
+        self.status_label.setStyleSheet("QLabel {font-family: Roboto, sans-serif; font-size: 24px;}")
+        self.status_label.setAlignment(Qt.AlignCenter)
+        
+        button_layout.addStretch()
+        button_layout.addWidget(self.reset_button)
+        button_layout.addWidget(self.new_game_button)
+        button_layout.addStretch()
+        footer_layout.addWidget(self.status_label)
+        footer_layout.addLayout(button_layout)
+
 
         return footer_layout
 
     def run_game(self, r, c, button):
         self.engine.update_board(r, c, button)
         if self.engine.check_victory():
-            print(f"{self.engine.player} Won the game")
+            self.status_label.setText(f"Player {self.engine.player} WON")
             self.disable_enable_all_buttons("disable")
         elif self.engine.check_draw():
-            print("It's a tie")
+            self.status_label.setText(f"TIE")
             self.disable_enable_all_buttons("disable")
         else:
             self.engine.change_player()
@@ -111,6 +121,13 @@ class MainWindow(QMainWindow):
             self.current_player.setText(f"<span style='color: rgb(133, 232, 39);'>Current Player: X</span>")
         elif self.engine.player == "O":
             self.current_player.setText(f"<span style='color: #75e3ff;'>Current Player: O</span>")
+
+    def restart_game(self):
+        self.engine.board = [[" " for _ in range(3)] for _ in range(3)]
+        for button in self.buttons:
+            button.setIcon(QIcon())
+        self.disable_enable_all_buttons("enable")
+        self.status_label.setText("")
 
 def main():
     app = QApplication(sys.argv)
