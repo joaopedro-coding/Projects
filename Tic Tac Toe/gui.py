@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QV
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QSize, Qt
 from game_engine import TicTacToe
+from functools import partial
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,6 +14,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(700, 300 ,500, 500)
         self.setWindowTitle("TIC TAC TOE")
         self.engine = TicTacToe()
+        self.buttons = []
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -42,7 +44,7 @@ class MainWindow(QMainWindow):
         self.title_label = QLabel("TIC-TAC-TOE")
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setStyleSheet("QLabel {font-family: Roboto, sans-serif; font-size: 32px}")
-        self.current_player = QLabel(f"Current Player: {self.engine.player}")
+        self.current_player = QLabel(f"Current Player: X")
         self.current_player.setAlignment(Qt.AlignCenter)
         self.current_player.setStyleSheet("QLabel {font-family: Roboto, sans-serif; font-size: 16px; color: rgb(133, 232, 39)}")
         header_layout.addWidget(self.title_label)
@@ -56,9 +58,9 @@ class MainWindow(QMainWindow):
             for c in range(3):
                 button = QPushButton("")
                 button.setFixedSize(100, 100)
-                # button.setIcon(QIcon(os.path.join(DIR, "Resources/x.svg")))
-                # button.setIconSize(QSize(70, 70))
                 button.setStyleSheet("""QPushButton {border: 2px solid white; border-radius: 15px;} QPushButton:hover {background-color: rgb(80, 80, 80)} QPushButton:pressed {background-color: rgb(85, 85, 85)}""")
+                button.clicked.connect(partial(self.run_game, r, c, button))
+                self.buttons.append(button)
                 grid_layout.addWidget(button, r, c)
 
         return grid_layout  
@@ -83,6 +85,32 @@ class MainWindow(QMainWindow):
         footer_layout.addStretch()
 
         return footer_layout
+
+    def run_game(self, r, c, button):
+        self.engine.update_board(r, c, button)
+        if self.engine.check_victory():
+            print(f"{self.engine.player} Won the game")
+            self.disable_enable_all_buttons("disable")
+        elif self.engine.check_draw():
+            print("It's a tie")
+            self.disable_enable_all_buttons("disable")
+        else:
+            self.engine.change_player()
+            self.change_player_color()
+    
+    def disable_enable_all_buttons(self, prompt):
+        if prompt == "disable":
+            for button in self.buttons:
+                button.setEnabled(False)
+        elif prompt == "enable":
+            for button in self.buttons:
+                button.setEnabled(True)
+    
+    def change_player_color(self):
+        if self.engine.player == "X":
+            self.current_player.setText(f"<span style='color: rgb(133, 232, 39);'>Current Player: X</span>")
+        elif self.engine.player == "O":
+            self.current_player.setText(f"<span style='color: #75e3ff;'>Current Player: O</span>")
 
 def main():
     app = QApplication(sys.argv)

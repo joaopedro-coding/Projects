@@ -1,29 +1,22 @@
-from error import PlaceError
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSize
+import os
+
+DIR = os.path.dirname(os.path.abspath(__file__))
 
 class TicTacToe:
     def __init__(self):
         self.board = [[" " for _ in range(3)] for _ in range(3)]
         self.player = "X"
 
-    def display_board(self):
-        for space in self.board:
-            print(space)
-        
-    def get_play(self):
-        player_choice = input("Choose line and column (in this order) ").split(" ")
-        return int(player_choice[0]) - 1, int(player_choice[1]) - 1
-    
     def is_empty(self, line, column):
         return self.board[line][column] == " "
     
-    def update_board(self):
-        line, column = self.get_play()
-        if not self.is_empty(line, column):
-            raise PlaceError("This place is already ocuppied")
-        else:
-            self.board[line][column] = self.player
-        self.display_board()
-        self.change_player()
+    def update_board(self, row, column, button):
+        button.setIcon(QIcon(os.path.join(DIR, f"Resources/{self.player}.svg")))
+        button.setIconSize(QSize(70, 70))
+        button.setEnabled(False)
+        self.board[row][column] = self.player
     
     def check_victory(self):
         for i in range(3):
@@ -46,25 +39,3 @@ class TicTacToe:
     
     def check_draw(self):
         return all(space != " " for row in self.board for space in row)
-
-class PlayGame():
-    def __init__(self):
-        self.game = TicTacToe()
-    
-    def run_game(self):
-        while True:
-            self.game.update_board()
-            if self.game.check_victory():
-                self.game.change_player()
-                print(f"Game over {self.game.player} won.") 
-                break
-            elif self.game.check_draw():
-                print("The game was a tie")
-                break
-
-def main():
-    game = PlayGame()
-    game.run_game()
-
-if __name__ == "__main__":
-    main()
