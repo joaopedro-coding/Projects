@@ -2,6 +2,7 @@ import sys
 import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QVBoxLayout, QWidget, QPushButton, QGridLayout
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSize, Qt
 from game_engine import TicTacToe
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +18,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
         self.main_layout = QVBoxLayout()
-
+        self.main_layout.addStretch()
         # Creating the parts
         ## Header
         self.header = self.create_header()
@@ -26,6 +27,7 @@ class MainWindow(QMainWindow):
         ## Grid
         self.grid = self.create_board()
         self.main_layout.addLayout(self.grid)
+        self.main_layout.addSpacing(20)
 
         ## Footer
         self.footer = self.create_footer()
@@ -38,7 +40,11 @@ class MainWindow(QMainWindow):
         header_layout = QVBoxLayout()
 
         self.title_label = QLabel("TIC-TAC-TOE")
+        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setStyleSheet("QLabel {font-family: Roboto, sans-serif; font-size: 32px}")
         self.current_player = QLabel(f"Current Player: {self.engine.player}")
+        self.current_player.setAlignment(Qt.AlignCenter)
+        self.current_player.setStyleSheet("QLabel {font-family: Roboto, sans-serif; font-size: 16px; color: rgb(133, 232, 39)}")
         header_layout.addWidget(self.title_label)
         header_layout.addWidget(self.current_player)
 
@@ -50,6 +56,9 @@ class MainWindow(QMainWindow):
             for c in range(3):
                 button = QPushButton("")
                 button.setFixedSize(100, 100)
+                # button.setIcon(QIcon(os.path.join(DIR, "Resources/x.svg")))
+                # button.setIconSize(QSize(70, 70))
+                button.setStyleSheet("""QPushButton {border: 2px solid white; border-radius: 15px;} QPushButton:hover {background-color: rgb(80, 80, 80)} QPushButton:pressed {background-color: rgb(85, 85, 85)}""")
                 grid_layout.addWidget(button, r, c)
 
         return grid_layout  
@@ -57,9 +66,16 @@ class MainWindow(QMainWindow):
     def create_footer(self):
         footer_layout = QHBoxLayout()
 
-        self.reset_button = QPushButton("Reset")
+        self.reset_button = QPushButton("RESET")
         self.reset_button.setIcon(QIcon(os.path.join(DIR, "Resources/recycle.svg")))
-        self.new_game_button = QPushButton("New Game")
+        self.reset_button.setFixedSize(120, 30)
+        self.reset_button.setIconSize(QSize(20, 20))
+        self.reset_button.setStyleSheet("QPushButton {border: 1px solid grey; border-radius: 2px; font-family: Roboto, sans-serif; font-size: 12px; padding: 8px 12px 8px 12px; background-color: rgb(65, 65, 65)} QPushButton:hover {background-color: rgb(80, 80, 80)} QPushButton:pressed {background-color: rgb(85, 85, 85)}")
+        self.new_game_button = QPushButton("NEW GAME")
+        self.new_game_button.setFixedSize(120, 30)
+        self.new_game_button.setIconSize(QSize(20, 20))
+        self.new_game_button.setStyleSheet("QPushButton {border: 1px solid rgb(133, 232, 39); border-radius: 2px; font-family: Roboto, sans-serif; font-size: 12px; padding: 8px 12px 8px 12px; background-color: rgb(60, 77, 44); color: rgb(133, 232, 39)} QPushButton:hover {background-color: rgb(80, 100, 60)} QPushButton:pressed {background-color: rgb(85, 110, 65)}")
+        
 
         footer_layout.addStretch()
         footer_layout.addWidget(self.reset_button)
