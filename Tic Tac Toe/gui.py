@@ -1,4 +1,3 @@
-import sys
 import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QHBoxLayout, QVBoxLayout, QWidget, QPushButton, QGridLayout
 from PySide6.QtGui import QIcon
@@ -128,12 +127,3 @@ class MainWindow(QMainWindow):
             button.setIcon(QIcon())
         self.disable_enable_all_buttons("enable")
         self.status_label.setText("")
-
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
-
-if __name__ == "__main__":
-    main()
