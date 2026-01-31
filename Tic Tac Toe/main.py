@@ -25,7 +25,7 @@ class TicTacToe:
         self.display_board()
         self.change_player()
     
-    def check_vitory(self):
+    def check_victory(self):
         for i in range(3):
             # Checking horizontal and vertical lines
             if self.board[i][0] == self.board[i][1] == self.board[i][2] != " ":
@@ -43,19 +43,24 @@ class TicTacToe:
     
     def change_player(self):
         self.player = "X" if self.player == "O" else "O"
+    
+    def check_draw(self):
+        return all(space != " " for row in self.board for space in row)
 
 class PlayGame():
     def __init__(self):
         self.game = TicTacToe()
     
     def run_game(self):
-        winning_player = ""
-        while not self.game.check_vitory():
-            winning_player = self.game.check_vitory()
+        while True:
             self.game.update_board()
-        print(f"Game over {winning_player} won.")
-
-
+            if self.game.check_victory():
+                self.game.change_player()
+                print(f"Game over {self.game.player} won.") 
+                break
+            elif self.game.check_draw():
+                print("The game was a tie")
+                break
 
 def main():
     game = PlayGame()
