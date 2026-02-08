@@ -67,6 +67,22 @@ class WatermarkApp(QMainWindow):
             self.selected_color = color
             self.ui.color_box.setStyleSheet(f"background-color: {color.name()}; border-radius: 5px;")
 
+    def _get_pos_(self):
+        position_buttons = {
+            "top_left": self.ui.pos_top_left,
+            "top_center": self.ui.pos_top_mid,
+            "top_right": self.ui.pos_top_right,
+            "middle_left": self.ui.pos_mid_left,
+            "center": self.ui.pos_mid,
+            "middle_right": self.ui.pos_mid_right,
+            "bottom_left": self.ui.pos_bottom_left,
+            "bottom_center": self.ui.pos_bottom_mid,
+            "bottom_right": self.ui.pos_bottom_right,
+        }
+        for name, btn in position_buttons.items():
+            if btn.isChecked():
+                return name
+
     def add_watermark(self):
         font = self.ui.font_box.font().family()
 
