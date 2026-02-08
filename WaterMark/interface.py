@@ -185,6 +185,12 @@ class Ui_MainWindow(object):
 "QComboBox::item {\n"
 "    height: 35px;\n"
 "    padding-left: 10px;\n"
+"}\n"
+"\n"
+"QComboBox:disabled {\n"
+"    background-color: #2b2b2b;\n"
+""
+                        "    color: #555555;\n"
 "}")
 
         self.horizontalLayout_7.addWidget(self.font_box)
@@ -230,6 +236,10 @@ class Ui_MainWindow(object):
 "QSlider::sub-page:horizontal {\n"
 "    background: #2ABB9B;\n"
 "    border-radius: 3px;\n"
+"}\n"
+"QSlider:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.slider_size.setMinimum(10)
         self.slider_size.setMaximum(100)
@@ -284,6 +294,10 @@ class Ui_MainWindow(object):
 "QSlider::sub-page:horizontal {\n"
 "    background: #2ABB9B;\n"
 "    border-radius: 3px;\n"
+"}\n"
+"QSlider:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.slider_opacity.setMinimum(10)
         self.slider_opacity.setMaximum(100)
@@ -312,9 +326,15 @@ class Ui_MainWindow(object):
         self.color_box.setObjectName(u"color_box")
         self.color_box.setMinimumSize(QSize(32, 32))
         self.color_box.setMaximumSize(QSize(32, 32))
-        self.color_box.setStyleSheet(u"background-color: #000000; \n"
+        self.color_box.setStyleSheet(u"#color_box:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
+"}\n"
+"#color_box {\n"
+"background-color: #000000; \n"
 "border: 2px solid #34495E;\n"
-"border-radius: 5px;")
+"border-radius: 5px;\n"
+"}")
 
         self.horizontalLayout_10.addWidget(self.color_box)
 
@@ -355,6 +375,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_bottom_mid.setCheckable(True)
 
@@ -372,6 +396,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_mid.setCheckable(True)
 
@@ -389,6 +417,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_mid_left.setCheckable(True)
 
@@ -406,6 +438,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_top_left.setCheckable(True)
 
@@ -423,6 +459,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_bottom_right.setCheckable(True)
 
@@ -440,6 +480,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_bottom_left.setCheckable(True)
 
@@ -457,6 +501,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_top_right.setCheckable(True)
 
@@ -474,6 +522,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_top_mid.setCheckable(True)
 
@@ -491,6 +543,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton {\n"
 "	background-color: #e0e0e0\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: #2b2b2b;\n"
+"    color: #555555;\n"
 "}")
         self.pos_mid_right.setCheckable(True)
 

@@ -269,6 +269,11 @@ QComboBox QAbstractItemView {
 QComboBox::item {
     height: 35px;
     padding-left: 10px;
+}
+
+QComboBox:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
           </property>
          </widget>
@@ -330,6 +335,10 @@ QSlider::handle:horizontal:hover {
 QSlider::sub-page:horizontal {
     background: #2ABB9B;
     border-radius: 3px;
+}
+QSlider:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
           </property>
           <property name="minimum">
@@ -401,6 +410,10 @@ QSlider::handle:horizontal:hover {
 QSlider::sub-page:horizontal {
     background: #2ABB9B;
     border-radius: 3px;
+}
+QSlider:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
           </property>
           <property name="minimum">
@@ -460,9 +473,15 @@ QSlider::sub-page:horizontal {
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: #000000; 
+           <string notr="true">#color_box:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
+}
+#color_box {
+background-color: #000000; 
 border: 2px solid #34495E;
-border-radius: 5px;</string>
+border-radius: 5px;
+}</string>
           </property>
           <property name="text">
            <string/>
@@ -545,6 +564,10 @@ border-radius: 5px;</string>
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -580,6 +603,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -615,6 +642,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -650,6 +681,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -685,6 +720,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -720,6 +759,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -755,6 +798,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -790,6 +837,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
@@ -825,6 +876,10 @@ QPushButton {
 }
 QPushButton {
 	background-color: #e0e0e0
+}
+QPushButton:disabled {
+    background-color: #2b2b2b;
+    color: #555555;
 }</string>
              </property>
              <property name="text">
