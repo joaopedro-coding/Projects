@@ -1,8 +1,33 @@
 from PySide6.QtWidgets import QFrame, QPushButton, QLabel, QSlider, QFontComboBox, QRadioButton
+from PySide6.QtCore import Qt, Signal
+import os
 
 class drop_area(QFrame):
+    file_dropped = Signal(str)
+    error = Signal(str)
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setAcceptDrops(True)
+    
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+    
+    def dropEvent(self, event):
+        urls = event.mimeData().urls()
+        if urls:
+            file_path = urls[0].toLocalFile()
+            if os.path.isfile(file_path):
+                extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.webp')
+                
+                if file_path.lower().endswith(extensions):
+                    self.file_dropped.emit(file_path)
+                else:
+                    self.error.emit("Not an image")
+            else:
+                self.error.emit("Place only image files")
 
 class btn_browse(QPushButton):
     def __init__(self, parent=None):
