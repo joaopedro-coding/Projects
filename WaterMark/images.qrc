@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="/">
+    <file>Resources/folder.svg</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>Resources/image.svg</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>Resources/droplet.svg</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>Resources/cloud.svg</file>
+  </qresource>
+</RCC>
