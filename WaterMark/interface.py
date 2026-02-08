@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (QApplication, QButtonGroup, QFrame, QGridLayout,
 from widgets import (btn_browse, color_box, drop_area, filename_label,
     font_box, generate_btn, pos_button, slider,
     slider_opacity_value, slider_size_value, text_watermark_radio)
+
 import resources_rc
 
 class Ui_MainWindow(object):
